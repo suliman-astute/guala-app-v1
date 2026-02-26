@@ -29,8 +29,8 @@ return new class extends Migration {
 
         Schema::create('gestione_turni', function (Blueprint $table) {
             $table->id();
-            $table->unsignedBigInteger('id_capoturno')->index();
-            $table->unsignedBigInteger('id_turno')->index();
+            $table->unsignedBigInteger('id_capoturno')->index(); // FK to users or employees
+            $table->foreignId('id_turno')->constrained('turni');
             $table->date('data_turno')->index();
             $table->timestamps();
         });
@@ -42,8 +42,8 @@ return new class extends Migration {
 
         Schema::create('note_macchine_operatori', function (Blueprint $table) {
             $table->id();
-            $table->unsignedBigInteger('id_macchina')->index();
-            $table->unsignedBigInteger('id_operatore')->index();
+            $table->foreignId('id_macchina')->constrained('machine_center');
+            $table->unsignedBigInteger('id_operatore')->index(); // FK to users
             $table->date('data');
             $table->unique(['id_macchina', 'id_operatore', 'data'], 'uq_macc_op_data');
             $table->timestamps();
