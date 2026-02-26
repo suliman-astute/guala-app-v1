@@ -39,4 +39,11 @@ return new class extends Migration {
             $table->timestamps();
         });
     }
+
+    public function down(): void {
+        Schema::dropIfExists('table_gestione_ad');
+        Schema::dropIfExists('active_app_user');
+        Schema::dropIfExists('active_apps');
+        Schema::dropIfExists('users');
+    }
 };

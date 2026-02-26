@@ -56,4 +56,15 @@ return new class extends Migration {
             $table->timestamps();
         });
     }
+
+    public function down(): void {
+        Schema::dropIfExists('bisio_progetti_stain');
+        Schema::dropIfExists('qta_guala_pro_rom');
+        Schema::dropIfExists('commento_lavori_guala_fp');
+        Schema::dropIfExists('ext_infos');
+        Schema::dropIfExists('table_piovan_import');
+        Schema::dropIfExists('enpoint_piovan');
+        Schema::dropIfExists('codici_oggetti');
+        Schema::dropIfExists('dictionary_table');
+    }
 };

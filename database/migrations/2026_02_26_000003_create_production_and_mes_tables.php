@@ -57,4 +57,15 @@ return new class extends Migration {
             $table->timestamps();
         });
     }
+
+    public function down(): void {
+        Schema::dropIfExists('ordini_lavoro_lotti');
+        Schema::dropIfExists('table_guaprodrouting');
+        Schema::dropIfExists('orderfrommes');
+        Schema::dropIfExists('bom_explosion');
+        Schema::dropIfExists('gua_items_in_producion_fp');
+        Schema::dropIfExists('table_gua_items_in_producion');
+        Schema::dropIfExists('gua_mes_prod_orders_fp');
+        Schema::dropIfExists('table_gua_mes_prod_orders');
+    }
 };

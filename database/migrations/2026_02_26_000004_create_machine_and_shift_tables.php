@@ -57,4 +57,14 @@ return new class extends Migration {
             $table->timestamps();
         });
     }
+
+    public function down(): void {
+        Schema::dropIfExists('ordine_note');
+        Schema::dropIfExists('note_macchine_operatori');
+        Schema::dropIfExists('gestione_turni_presse');
+        Schema::dropIfExists('gestione_turni');
+        Schema::dropIfExists('turni');
+        Schema::dropIfExists('tabella_appoggio_macchine');
+        Schema::dropIfExists('machine_center');
+    }
 };
