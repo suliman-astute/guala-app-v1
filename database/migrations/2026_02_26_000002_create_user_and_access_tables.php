@@ -7,41 +7,32 @@ return new class extends Migration {
     public function up(): void {
         Schema::create('users', function (Blueprint $table) {
             $table->id();
-            $table->string('name')->nullable();
             $table->string('email')->unique();
-            $table->timestamp('email_verified_at')->nullable();
+            $table->unsignedBigInteger('site_id')->index();
+            $table->string('user_id')->index(); // Legacy Key
+            $table->string('matricola')->index(); // Employee Key
+            $table->string('name')->nullable();
             $table->string('password')->nullable();
-            $table->foreignId('site_id')->constrained('sites');
-            $table->string('user_id')->nullable();
-            $table->string('matricola')->nullable();
-            $table->rememberToken();
             $table->timestamps();
         });
 
         Schema::create('active_apps', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('site_id')->constrained('sites');
-            $table->string('code')->unique();
+            $table->unsignedBigInteger('site_id')->index();
+            $table->string('code')->unique(); // Module Key
+            $table->string('name')->nullable();
             $table->timestamps();
         });
 
         Schema::create('active_app_user', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('user_id')->constrained('users')->onDelete('cascade');
-            $table->foreignId('active_app_id')->constrained('active_apps')->onDelete('cascade');
-            $table->timestamps();
-        });
-
-        Schema::create('table_gestione_ad', function (Blueprint $table) {
-            $table->id();
-            $table->string('host');
-            $table->string('base_dn');
+            $table->unsignedBigInteger('user_id')->index();
+            $table->unsignedBigInteger('active_app_id')->index();
             $table->timestamps();
         });
     }
 
     public function down(): void {
-        Schema::dropIfExists('table_gestione_ad');
         Schema::dropIfExists('active_app_user');
         Schema::dropIfExists('active_apps');
         Schema::dropIfExists('users');

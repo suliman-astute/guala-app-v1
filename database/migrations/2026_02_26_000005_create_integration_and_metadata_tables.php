@@ -7,10 +7,10 @@ return new class extends Migration {
     public function up(): void {
         Schema::create('dictionary_table', function (Blueprint $table) {
             $table->id();
-            $table->string('tabella');
-            $table->string('colonna');
-            $table->string('it');
-            $table->string('en');
+            $table->string('tabella')->nullable();
+            $table->string('colonna')->nullable();
+            $table->string('it')->nullable();
+            $table->string('en')->nullable();
             $table->timestamps();
         });
 
@@ -22,7 +22,7 @@ return new class extends Migration {
 
         Schema::create('enpoint_piovan', function (Blueprint $table) {
             $table->id();
-            $table->string('url');
+            $table->string('url')->nullable();
             $table->timestamps();
         });
 
@@ -40,27 +40,9 @@ return new class extends Migration {
             $table->string('code')->index();
             $table->timestamps();
         });
-
-        Schema::create('commento_lavori_guala_fp', function (Blueprint $table) {
-            $table->id();
-            $table->timestamps();
-        });
-
-        Schema::create('qta_guala_pro_rom', function (Blueprint $table) {
-            $table->id();
-            $table->timestamps();
-        });
-
-        Schema::create('bisio_progetti_stain', function (Blueprint $table) {
-            $table->id();
-            $table->timestamps();
-        });
     }
 
     public function down(): void {
-        Schema::dropIfExists('bisio_progetti_stain');
-        Schema::dropIfExists('qta_guala_pro_rom');
-        Schema::dropIfExists('commento_lavori_guala_fp');
         Schema::dropIfExists('ext_infos');
         Schema::dropIfExists('table_piovan_import');
         Schema::dropIfExists('enpoint_piovan');

@@ -9,7 +9,7 @@ return new class extends Migration {
             $table->id();
             $table->string('mesOrderNo')->index();
             $table->string('itemNo')->index();
-            $table->string('machine_no')->nullable()->index(); // Added for view join
+            $table->string('machine_no')->nullable();
             $table->timestamps();
         });
 
@@ -41,7 +41,6 @@ return new class extends Migration {
         Schema::create('orderfrommes', function (Blueprint $table) {
             $table->id();
             $table->string('mesOrderNo')->index();
-            $table->string('status');
             $table->timestamps();
         });
 
@@ -51,8 +50,24 @@ return new class extends Migration {
             $table->timestamps();
         });
 
+        Schema::create('commento_lavori_guala_fp', function (Blueprint $table) {
+            $table->id();
+            $table->timestamps();
+        });
+
+        Schema::create('qta_guala_pro_rom', function (Blueprint $table) {
+            $table->id();
+            $table->timestamps();
+        });
+
+        Schema::create('bisio_progetti_stain', function (Blueprint $table) {
+            $table->id();
+            $table->timestamps();
+        });
+
         Schema::create('ordini_lavoro_lotti', function (Blueprint $table) {
             $table->id();
+            $table->string('mesOrderNo')->index();
             $table->string('lotto')->index();
             $table->timestamps();
         });
@@ -60,6 +75,9 @@ return new class extends Migration {
 
     public function down(): void {
         Schema::dropIfExists('ordini_lavoro_lotti');
+        Schema::dropIfExists('bisio_progetti_stain');
+        Schema::dropIfExists('qta_guala_pro_rom');
+        Schema::dropIfExists('commento_lavori_guala_fp');
         Schema::dropIfExists('table_guaprodrouting');
         Schema::dropIfExists('orderfrommes');
         Schema::dropIfExists('bom_explosion');

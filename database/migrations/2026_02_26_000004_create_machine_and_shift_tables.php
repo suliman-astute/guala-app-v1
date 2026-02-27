@@ -7,8 +7,8 @@ return new class extends Migration {
     public function up(): void {
         Schema::create('machine_center', function (Blueprint $table) {
             $table->id();
-            $table->string('no')->index();
-            $table->string('GUAPosition')->index();
+            $table->string('no')->index(); // MES Machine Code
+            $table->string('GUAPosition')->index(); // Physical Slot
             $table->timestamps();
         });
 
@@ -21,16 +21,14 @@ return new class extends Migration {
 
         Schema::create('turni', function (Blueprint $table) {
             $table->id();
-            $table->string('nome');
-            $table->time('inizio');
-            $table->time('fine');
+            $table->string('nome')->nullable();
             $table->timestamps();
         });
 
         Schema::create('gestione_turni', function (Blueprint $table) {
             $table->id();
-            $table->unsignedBigInteger('id_capoturno')->index(); // FK to users or employees
-            $table->foreignId('id_turno')->constrained('turni');
+            $table->unsignedBigInteger('id_capoturno')->index();
+            $table->unsignedBigInteger('id_turno')->index();
             $table->date('data_turno')->index();
             $table->timestamps();
         });
@@ -42,9 +40,9 @@ return new class extends Migration {
 
         Schema::create('note_macchine_operatori', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('id_macchina')->constrained('machine_center');
-            $table->unsignedBigInteger('id_operatore')->index(); // FK to users
-            $table->date('data');
+            $table->unsignedBigInteger('id_macchina')->index();
+            $table->unsignedBigInteger('id_operatore')->index();
+            $table->date('data')->index();
             $table->unique(['id_macchina', 'id_operatore', 'data'], 'uq_macc_op_data');
             $table->timestamps();
         });
@@ -56,9 +54,17 @@ return new class extends Migration {
             $table->unique(['ordine', 'lotto']);
             $table->timestamps();
         });
+
+        Schema::create('presse_guala_fp', function (Blueprint $table) {
+            $table->id();
+            $table->string('GUAPosition')->index();
+            $table->string('id_mes')->index();
+            $table->timestamps();
+        });
     }
 
     public function down(): void {
+        Schema::dropIfExists('presse_guala_fp');
         Schema::dropIfExists('ordine_note');
         Schema::dropIfExists('note_macchine_operatori');
         Schema::dropIfExists('gestione_turni_presse');
